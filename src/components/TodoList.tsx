@@ -7,6 +7,7 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import Textarea from "./ui/Textarea";
 import axiosInstance from "../config/axios.config";
 import TodoSekelton from "./ui/TodoSekelton";
+import { faker } from "@faker-js/faker";
 
 const TodoList = () => {
   const storageKey = "userData";
@@ -162,6 +163,31 @@ const TodoList = () => {
     }
   };
 
+  const onGenerateTodos = async () => {
+    //100 record
+    for (let i = 0; i < 100; i++) {
+      try {
+        const { data } = await axiosInstance.post(
+          `/todos`,
+          {
+            data: {
+              title: faker.word.words(5),
+              description: faker.lorem.paragraph(2),
+              user: [userData.user.id],
+            },
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${userData.jwt}`,
+            },
+          }
+        );
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
   if (isLoading)
     return (
       <div className="bg-slate-200 rounded-md">
@@ -171,10 +197,13 @@ const TodoList = () => {
       </div>
     );
 
-  let i = 1;
   return (
     <div className="space-y-1 max-w-5xl mx-auto rounded-md bg-gray-800 text-white p-4 mb-7 mt-0">
-      <Button className="mx-auto mb-2" variant={"outline"}>
+      <Button
+        className="mx-auto mb-2"
+        variant={"outline"}
+        onClick={onGenerateTodos}
+      >
         Generate todos
       </Button>
       <div className="space-y-1">
@@ -190,20 +219,20 @@ const TodoList = () => {
         </div>
       </div>
       {data.todos.length ? (
-        data.todos.map((todo: ITodo) => (
+        data.todos.map((todo: ITodo, idx: number) => (
           <div
             key={todo.id}
             className="flex items-center justify-between hover:bg-gray-600 duration-300 p-3 rounded-md even:text-blue-500 even:bg-gray-600"
           >
             <div>
               <p className="w-full font-semibold">
-                {i++} - {todo.title}
+                {idx + 1} - {todo.title}
               </p>
               <span className="block w-full py-1 text-sm text-slate-300">
                 {todo.description}
               </span>
             </div>
-            <div className="flex items-center justify-end w-full space-x-3">
+            <div className="flex basis-72 items-center justify-end w-full space-x-3">
               <Button
                 size={"sm"}
                 onClick={() => {
