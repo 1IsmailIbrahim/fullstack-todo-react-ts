@@ -2,7 +2,7 @@ const TodoSekelton = () => {
   return (
     <div
       role="status"
-      className="max-w-5xl p-4 mb-7 mt-0 divide-y divide-gray-200 rounded shadow animate-pulse dark:divide-gray-700 md:p-6 dark:border-gray-700"
+      className="bg- max-w-5xl p-4 mb-7 mt-0 divide-y divide-gray-200 rounded shadow animate-pulse dark:divide-gray-700 md:p-6 dark:border-gray-700"
     >
       <div className="flex items-center justify-between">
         <div>

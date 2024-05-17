@@ -18,7 +18,7 @@ const buttonVariants = cva(
 
         // ** OUTLINE
         outline:
-          "border border-indigo-400 hover:text-white bg-transparent text-black hover:border-transparent hover:bg-indigo-600 dark:text-gray-700 dark:hover:text-white",
+          "border border-bg-white hover:border-blue-500 dark:text-white dark:hover:text-blue-500",
       },
       size: {
         default: "p-3",

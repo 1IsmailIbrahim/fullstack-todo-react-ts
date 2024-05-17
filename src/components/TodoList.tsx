@@ -7,10 +7,13 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import Textarea from "./ui/Textarea";
 import axiosInstance from "../config/axios.config";
 import TodoSekelton from "./ui/TodoSekelton";
+import { faker } from "@faker-js/faker";
+
 const TodoList = () => {
   const storageKey = "userData";
   const userDataString = localStorage.getItem(storageKey);
   const userData = userDataString ? JSON.parse(userDataString) : null;
+
   const [queryVersion, setQueryVersion] = useState(1);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -160,18 +163,46 @@ const TodoList = () => {
     }
   };
 
+  const onGenerateTodos = async () => {
+    for (let i = 0; i < 100; i++) {
+      try {
+        const todaData = {
+          data: {
+            title: faker.word.words(3),
+            description: faker.lorem.paragraph(2),
+            user: [userData?.user.id],
+          },
+        };
+        await axiosInstance.post(`/todos`, todaData, {
+          headers: {
+            Authorization: `Bearer ${userData.jwt}`,
+          },
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
   if (isLoading)
     return (
-      <>
+      <div className="bg-slate-200 rounded-md">
         {Array.from({ length: 3 }, (_, idx) => (
           <TodoSekelton key={idx} />
         ))}
-      </>
+      </div>
     );
 
   let i = 1;
   return (
     <div className="space-y-1 max-w-5xl mx-auto rounded-md bg-gray-800 text-white p-4 mb-7 mt-0">
+      <Button
+        className="mx-auto mb-2"
+        variant={"outline"}
+        onClick={onGenerateTodos}
+      >
+        Generate todos
+      </Button>
       <div className="space-y-1">
         <div className="fixed bottom-16 right-9">
           <button
