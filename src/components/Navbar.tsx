@@ -44,7 +44,13 @@ const Navbar = () => {
           {userData ? (
             <div className="flex justify-center items-center">
               <NavLink
-                to="/Profile"
+                to="/todos"
+                className="mx-2 hover:text-blue-500 font-semibold"
+              >
+                Todos
+              </NavLink>
+              <NavLink
+                to="/profile"
                 className="mx-2 hover:text-blue-500 font-semibold"
               >
                 Profile
