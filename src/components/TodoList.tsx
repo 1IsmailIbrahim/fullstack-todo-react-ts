@@ -7,7 +7,6 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import Textarea from "./ui/Textarea";
 import axiosInstance from "../config/axios.config";
 import TodoSekelton from "./ui/TodoSekelton";
-import { faker } from "@faker-js/faker";
 
 const TodoList = () => {
   const storageKey = "userData";
@@ -163,31 +162,6 @@ const TodoList = () => {
     }
   };
 
-  const onGenerateTodos = async () => {
-    //100 record
-    for (let i = 0; i < 100; i++) {
-      try {
-        const { data } = await axiosInstance.post(
-          `/todos`,
-          {
-            data: {
-              title: faker.word.words(5),
-              description: faker.lorem.paragraph(2),
-              user: [userData.user.id],
-            },
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${userData.jwt}`,
-            },
-          }
-        );
-        console.log(data);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  };
   if (isLoading)
     return (
       <div className="bg-slate-200 rounded-md">
@@ -199,13 +173,6 @@ const TodoList = () => {
 
   return (
     <div className="space-y-1 max-w-5xl mx-auto rounded-md bg-gray-800 text-white p-4 mb-7 mt-0">
-      <Button
-        className="mx-auto mb-2"
-        variant={"outline"}
-        onClick={onGenerateTodos}
-      >
-        Generate todos
-      </Button>
       <div className="space-y-1">
         <div className="fixed bottom-16 right-9">
           <button

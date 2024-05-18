@@ -49,12 +49,6 @@ const Navbar = () => {
               >
                 Todos
               </NavLink>
-              <NavLink
-                to="/profile"
-                className="mx-2 hover:text-blue-500 font-semibold"
-              >
-                Profile
-              </NavLink>
               <Button
                 size={"sm"}
                 variant={"danger"}

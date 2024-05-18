@@ -19,6 +19,9 @@ const buttonVariants = cva(
         // ** OUTLINE
         outline:
           "border border-bg-white hover:border-blue-500 dark:text-white dark:hover:text-blue-500",
+        // ** OUTLINE
+        paginate:
+          "bg-gray-800 dark:text-white rounded-l-md border-r border border-gray-100 flex items-center justify-center px-4 h-10 me-3 text-base font-medium rounded-lg hover:text-blue-500 hover:border-blue-500 disabled:text-gray-600 disabled:border-gray-600  disabled:cursor-not-allowed",
       },
       size: {
         default: "p-3",
@@ -41,6 +44,7 @@ interface ButtonProps
   children: ReactNode;
   isLoading?: boolean;
   type?: "submit" | "reset" | "button";
+  locked?: boolean;
 }
 
 const Button = ({
@@ -51,6 +55,7 @@ const Button = ({
   className,
   children,
   isLoading,
+  locked,
   ...props
 }: ButtonProps) => {
   return (
@@ -58,7 +63,7 @@ const Button = ({
       type={type}
       className={cn(buttonVariants({ variant, size, fullWidth, className }))}
       {...props}
-      disabled={isLoading}
+      disabled={isLoading || locked}
     >
       {isLoading ? <AnimateSpain /> : null}
       {children}

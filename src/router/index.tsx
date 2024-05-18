@@ -10,7 +10,6 @@ import ErrorHandler from "../components/errors/ErrorHandler";
 import HomePage from "../pages";
 import LoginPage from "../pages/Login";
 import RegisterPage from "../pages/Register";
-import ProfilePage from "../pages/Profile";
 import TodosPage from "../pages/Todos";
 
 const storageKey = "userData";
@@ -44,18 +43,6 @@ const router = createBrowserRouter(
               data={userData}
             >
               <TodosPage />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="profile"
-          element={
-            <ProtectedRoute
-              isAllowed={userData?.jwt}
-              redirectPath="/login"
-              data={userData}
-            >
-              <ProfilePage />
             </ProtectedRoute>
           }
         />
